@@ -24,38 +24,31 @@
  * }
  */
 class Solution {
-    ListNode curr;
+    ListNode node;
     public TreeNode sortedListToBST(ListNode head) {
-
-            int size = getBstSize(head);
-            curr = head;
-            return bstBuilder(size);
-
-
-        
+        this.node = head;   
+        return buildBST(getSize(head));
     }
 
-    public TreeNode bstBuilder(int size){
-        if(size <=0) return null;
-        TreeNode left = bstBuilder(size/2);
-        TreeNode root = new TreeNode(curr.val);
-        curr = curr.next;
-        TreeNode right = bstBuilder(size-1- size/2);
+    public TreeNode buildBST(int size){
+        if(size<=0) return null;
+        TreeNode left = buildBST(size/2);
+        TreeNode root = new TreeNode (node.val);
+        node = node.next;
         root.left = left;
-        root.right = right;
+        root.right = buildBST(size-1-size/2);
         return root;
 
-
-
     }
 
-    public int getBstSize(ListNode node){
-        int size=0;
-        while(node!=null){
-            node = node.next;
+
+    public int getSize(ListNode head){
+        int size = 0;
+
+        while(head!=null){
             size++;
+            head = head.next;
         }
         return size;
     }
-
 }
